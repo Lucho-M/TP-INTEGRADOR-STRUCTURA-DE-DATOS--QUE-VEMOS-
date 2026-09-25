@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+.idea/
+*.drawio.bak
+
+# Datasets sintéticos del TP2: se regeneran con "python datos/generar.py" (reproducible, no hace falta subirlos)
+datos/peliculas_*.csv
+
+# Notas de trabajo personales (no se suben)
+TP Integrador que vemos.md
+defensa-tp0-tp1.md
+defensa-tp2.md

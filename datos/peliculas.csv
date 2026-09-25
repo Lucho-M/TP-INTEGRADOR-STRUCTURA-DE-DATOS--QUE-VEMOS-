@@ -1,0 +1,33 @@
+id,titulo,anio,genero,subgenero,director,actores,puntaje,duracion,plataformas,fecha_retiro
+1,El Padrino,1972,Drama,Crimen,Francis Ford Coppola,Marlon Brando|Al Pacino|James Caan,9.2,175,Netflix,
+2,Pulp Fiction,1994,Crimen,Comedia negra,Quentin Tarantino,John Travolta|Samuel L. Jackson|Uma Thurman,8.9,154,Netflix,2026-10-15
+3,Matrix,1999,Ciencia ficcion,Ciberpunk,Lana Wachowski|Lilly Wachowski,Keanu Reeves|Laurence Fishburne|Carrie-Anne Moss,8.7,136,HBO Max,
+4,El Senor de los Anillos: La Comunidad del Anillo,2001,Fantasia,Epica,Peter Jackson,Elijah Wood|Ian McKellen|Viggo Mortensen,8.9,178,HBO Max,
+5,Titanic,1997,Drama,Romance,James Cameron,Leonardo DiCaprio|Kate Winslet,7.9,194,Disney+,
+6,Interestelar,2014,Ciencia ficcion,Espacial,Christopher Nolan,Matthew McConaughey|Anne Hathaway|Jessica Chastain,8.7,169,Netflix,
+7,El Origen,2010,Ciencia ficcion,Thriller,Christopher Nolan,Leonardo DiCaprio|Joseph Gordon-Levitt|Elliot Page,8.8,148,HBO Max,
+8,El Caballero de la Noche,2008,Accion,Superheroes,Christopher Nolan,Christian Bale|Heath Ledger|Gary Oldman,9.0,152,HBO Max,
+9,Batman Inicia,2005,Accion,Superheroes,Christopher Nolan,Christian Bale|Michael Caine|Liam Neeson,8.2,140,HBO Max,2026-11-30
+10,Parasitos,2019,Drama,Thriller,Bong Joon-ho,Song Kang-ho|Lee Sun-kyun|Cho Yeo-jeong,8.5,132,Netflix,
+11,El Hombre Arana,2002,Accion,Superheroes,Sam Raimi,Tobey Maguire|Willem Dafoe|Kirsten Dunst,7.4,121,Netflix,
+12,Los Increibles,2004,Animacion,Superheroes,Brad Bird,Craig T. Nelson|Holly Hunter|Samuel L. Jackson,8.0,115,Disney+,
+13,Toy Story,1995,Animacion,Aventura,John Lasseter,Tom Hanks|Tim Allen,8.3,81,Disney+,
+14,Coco,2017,Animacion,Musical,Lee Unkrich,Anthony Gonzalez|Gael Garcia Bernal,8.4,105,Disney+,
+15,Blade Runner 2049,2017,Ciencia ficcion,Ciberpunk,Denis Villeneuve,Ryan Gosling|Harrison Ford|Ana de Armas,8.0,164,HBO Max,
+16,La Llegada,2016,Ciencia ficcion,Drama,Denis Villeneuve,Amy Adams|Jeremy Renner|Forest Whitaker,7.9,116,Netflix,2026-10-08
+17,Duna,2021,Ciencia ficcion,Epica,Denis Villeneuve,Timothee Chalamet|Rebecca Ferguson|Oscar Isaac,8.0,155,HBO Max,
+18,El Resplandor,1980,Terror,Psicologico,Stanley Kubrick,Jack Nicholson|Shelley Duvall,8.4,146,HBO Max,
+19,2001: Odisea del Espacio,1968,Ciencia ficcion,Espacial,Stanley Kubrick,Keir Dullea|Gary Lockwood,8.3,149,HBO Max,
+20,Ciudad de Dios,2002,Drama,Crimen,Fernando Meirelles,Alexandre Rodrigues|Leandro Firmino,8.6,130,Netflix,2026-09-27
+21,El Secreto de sus Ojos,2009,Drama,Thriller,Juan Jose Campanella,Ricardo Darin|Soledad Villamil|Guillermo Francella,8.2,129,Netflix,
+22,Relatos Salvajes,2014,Comedia,Comedia negra,Damian Szifron,Ricardo Darin|Oscar Martinez|Leonardo Sbaraglia,8.1,122,Netflix,
+23,Nueve Reinas,2000,Crimen,Thriller,Fabian Bielinsky,Ricardo Darin|Gaston Pauls,7.9,114,HBO Max,
+24,Whiplash,2014,Drama,Musical,Damien Chazelle,Miles Teller|J.K. Simmons,8.5,106,Netflix,
+25,La La Land,2016,Musical,Romance,Damien Chazelle,Ryan Gosling|Emma Stone,8.0,128,Netflix,
+26,Gladiador,2000,Accion,Epica,Ridley Scott,Russell Crowe|Joaquin Phoenix|Connie Nielsen,8.5,155,Netflix,
+27,Alien: El Octavo Pasajero,1979,Terror,Ciencia ficcion,Ridley Scott,Sigourney Weaver|Tom Skerritt|John Hurt,8.5,117,Disney+,
+28,Volver al Futuro,1985,Ciencia ficcion,Aventura,Robert Zemeckis,Michael J. Fox|Christopher Lloyd,8.5,116,Netflix,
+29,Forrest Gump,1994,Drama,Romance,Robert Zemeckis,Tom Hanks|Robin Wright|Gary Sinise,8.8,142,Netflix,
+30,El Club de la Pelea,1999,Drama,Thriller,David Fincher,Brad Pitt|Edward Norton|Helena Bonham Carter,8.8,139,HBO Max,
+31,Pecados Capitales,1995,Thriller,Policial,David Fincher,Brad Pitt|Morgan Freeman|Kevin Spacey,8.6,127,Netflix,
+32,Zodiaco,2007,Thriller,Policial,David Fincher,Jake Gyllenhaal|Mark Ruffalo|Robert Downey Jr.,7.7,157,Netflix,2026-10-22
