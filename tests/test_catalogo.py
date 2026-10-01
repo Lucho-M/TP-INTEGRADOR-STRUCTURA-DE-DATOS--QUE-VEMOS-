@@ -43,6 +43,20 @@ class TestCatalogo(unittest.TestCase):
     def test_buscar_binaria_sin_coincidencia_devuelve_none(self):
         self.assertIsNone(self.catalogo.buscar_binaria("pelicula que no existe"))
 
+    def test_buscar_arbol_encuentra_titulo_exacto_sin_tildes(self):
+        resultado = self.catalogo.buscar_arbol("interestelar")
+        self.assertEqual(len(resultado), 1)
+        self.assertEqual(resultado[0].titulo, "Interestelar")
+
+    def test_buscar_arbol_sin_coincidencia_devuelve_lista_vacia(self):
+        self.assertEqual(self.catalogo.buscar_arbol("pelicula que no existe"), [])
+
+    def test_listar_ordenado_por_titulo_devuelve_todas_ordenadas(self):
+        ordenadas = self.catalogo.listar_ordenado_por_titulo()
+        self.assertEqual(len(ordenadas), len(self.catalogo))
+        titulos = [p.titulo.lower() for p in ordenadas]
+        self.assertEqual(titulos, sorted(titulos))
+
 
 if __name__ == "__main__":
     unittest.main()

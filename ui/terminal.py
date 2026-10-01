@@ -62,6 +62,18 @@ class Terminal:
                 print(f"\n👤 Tus plataformas: {plataformas}")
 
             elif opcion == "6":
+                titulo = input("\n🌳 Escribí el título EXACTO (usa el árbol BST): ")
+                resultados = self._catalogo.buscar_arbol(titulo)
+                print(f"\n🌳 Resultado exacto para: '{titulo}'")
+                _imprimir_linea()
+                _mostrar_peliculas(resultados)
+
+            elif opcion == "7":
+                print("\n🌳 Catálogo ordenado alfabéticamente (recorrido inorder del árbol):")
+                _imprimir_linea()
+                _mostrar_peliculas(self._catalogo.listar_ordenado_por_titulo())
+
+            elif opcion == "8":
                 print("\n👋 ¡Gracias por usar el sistema! Hasta luego.")
                 break
 
@@ -75,9 +87,11 @@ class Terminal:
         print("                MENÚ PRINCIPAL")
         print("=" * 55)
         print("1. 📋 Listar todas las películas")
-        print("2. 🔍 Buscar película por título")
+        print("2. 🔍 Buscar película por título (parcial)")
         print("3. 🎬 Filtrar películas por género")
         print("4. 📺 Filtrar películas por plataforma")
         print("5. 👤 Ver mis plataformas")
-        print("6. ❌ Salir")
+        print("6. 🌳 Buscar por título exacto (árbol BST)")
+        print("7. 🌳 Listar ordenado alfabéticamente (árbol BST)")
+        print("8. ❌ Salir")
         print("=" * 55)

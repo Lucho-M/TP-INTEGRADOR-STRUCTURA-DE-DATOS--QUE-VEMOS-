@@ -1,6 +1,7 @@
 import bisect
 import csv
 
+from estructuras.arbol import ArbolBST
 from modelos.pelicula import Pelicula
 from modelos.plataforma import Plataforma
 
@@ -13,6 +14,8 @@ class Catalogo:
         # Lista paralela ordenada por título (minúscula), para la búsqueda binaria (TP2).
         self._peliculas_por_titulo = []
         self._titulos_ordenados = []
+        # Árbol binario de búsqueda por título normalizado (TP3).
+        self._arbol = ArbolBST()
 
     def cargar_desde_csv(self, ruta):
         with open(ruta, encoding="utf-8") as archivo:
@@ -31,6 +34,7 @@ class Catalogo:
                     fecha_retiro=fila["fecha_retiro"],
                 )
                 self._peliculas.append(pelicula)
+                self._arbol.insertar(pelicula)
         self._ordenar_por_titulo()
 
     def _ordenar_por_titulo(self):
@@ -53,6 +57,17 @@ class Catalogo:
         if idx < len(self._titulos_ordenados) and self._titulos_ordenados[idx] == titulo:
             return self._peliculas_por_titulo[idx]
         return None
+
+    def buscar_arbol(self, titulo):
+        """Búsqueda exacta (sin tildes, case-insensitive) usando el árbol BST. O(log n) promedio."""
+        return self._arbol.buscar(titulo)
+
+    def listar_ordenado_por_titulo(self):
+        """Recorrido inorder del árbol: devuelve todas las películas ordenadas por título."""
+        return self._arbol.recorrido_inorder()
+
+    def altura_arbol(self):
+        return self._arbol.altura()
 
     def filtrar_por_genero(self, genero):
         genero = genero.strip().lower()

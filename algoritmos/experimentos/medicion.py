@@ -1,4 +1,4 @@
-"""TP2 - Compara búsqueda secuencial (Catalogo.buscar) vs binaria (Catalogo.buscar_binaria).
+"""TP2/TP3 - Compara búsqueda secuencial, binaria (bisect) y por árbol BST.
 
 Uso: python algoritmos/experimentos/medicion.py
 Requiere haber corrido antes: python datos/generar.py
@@ -23,8 +23,8 @@ def medir_ms(func, *args):
 
 
 def main():
-    print(f"{'N':>10} | {'Secuencial (ms)':>16} | {'Binaria (ms)':>13}")
-    print("-" * 46)
+    print(f"{'N':>10} | {'Secuencial (ms)':>16} | {'Binaria (ms)':>13} | {'Arbol BST (ms)':>14} | {'Altura':>6}")
+    print("-" * 70)
     resultados = []
     for n in TAMANOS:
         catalogo = Catalogo()
@@ -33,9 +33,11 @@ def main():
 
         t_secuencial = medir_ms(catalogo.buscar, titulo_existente)
         t_binaria = medir_ms(catalogo.buscar_binaria, titulo_existente)
+        t_arbol = medir_ms(catalogo.buscar_arbol, titulo_existente)
+        altura = catalogo.altura_arbol()
 
-        resultados.append((n, t_secuencial, t_binaria))
-        print(f"{n:>10} | {t_secuencial:>16.4f} | {t_binaria:>13.4f}")
+        resultados.append((n, t_secuencial, t_binaria, t_arbol, altura))
+        print(f"{n:>10} | {t_secuencial:>16.4f} | {t_binaria:>13.4f} | {t_arbol:>14.4f} | {altura:>6}")
 
     return resultados
 
