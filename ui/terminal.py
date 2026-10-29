@@ -74,6 +74,9 @@ class Terminal:
                 _mostrar_peliculas(self._catalogo.listar_ordenado_por_titulo())
 
             elif opcion == "8":
+                self._explorar_categorias()
+
+            elif opcion == "9":
                 print("\n👋 ¡Gracias por usar el sistema! Hasta luego.")
                 break
 
@@ -81,6 +84,46 @@ class Terminal:
                 print("\n⚠️ Opción inválida. Intentá nuevamente.")
 
             input("\nPresioná ENTER para continuar...")
+
+    def _explorar_categorias(self):
+        """Navega Género -> Subgénero (árbol general, TP5)."""
+        generos = self._catalogo.listar_generos()
+        print("\n📂 Géneros disponibles:")
+        _imprimir_linea()
+        for idx, genero in enumerate(generos, 1):
+            print(f"{idx}. {genero}")
+
+        seleccion = input("\nElegí un género (número, ENTER para volver): ").strip()
+        if not seleccion.isdigit() or not (1 <= int(seleccion) <= len(generos)):
+            return
+        genero = generos[int(seleccion) - 1]
+
+        subgeneros = self._catalogo.listar_subgeneros(genero)
+        if not subgeneros:
+            print(f"\n📂 '{genero}' no tiene subgéneros cargados. Películas del género:")
+            _imprimir_linea()
+            _mostrar_peliculas(self._catalogo.explorar_genero(genero))
+            return
+
+        print(f"\n📂 Subgéneros de '{genero}':")
+        _imprimir_linea()
+        print("0. (ver todas las películas de este género)")
+        for idx, subgenero in enumerate(subgeneros, 1):
+            print(f"{idx}. {subgenero}")
+
+        seleccion = input("\nElegí un subgénero (número, ENTER para volver): ").strip()
+        if not seleccion.isdigit() or not (0 <= int(seleccion) <= len(subgeneros)):
+            return
+
+        if seleccion == "0":
+            print(f"\n📂 Todas las películas de '{genero}':")
+            _imprimir_linea()
+            _mostrar_peliculas(self._catalogo.explorar_genero(genero))
+        else:
+            subgenero = subgeneros[int(seleccion) - 1]
+            print(f"\n📂 '{genero}' -> '{subgenero}':")
+            _imprimir_linea()
+            _mostrar_peliculas(self._catalogo.explorar_subgenero(genero, subgenero))
 
     def _mostrar_menu(self):
         print("\n" + "=" * 55)
@@ -93,5 +136,6 @@ class Terminal:
         print("5. 👤 Ver mis plataformas")
         print("6. 🌳 Buscar por título exacto (árbol BST)")
         print("7. 🌳 Listar ordenado alfabéticamente (árbol BST)")
-        print("8. ❌ Salir")
+        print("8. 📂 Explorar categorías (Género -> Subgénero)")
+        print("9. ❌ Salir")
         print("=" * 55)

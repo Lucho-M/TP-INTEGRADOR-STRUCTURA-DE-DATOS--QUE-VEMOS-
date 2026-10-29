@@ -57,6 +57,25 @@ class TestCatalogo(unittest.TestCase):
         titulos = [p.titulo.lower() for p in ordenadas]
         self.assertEqual(titulos, sorted(titulos))
 
+    def test_listar_generos_no_esta_vacio(self):
+        self.assertTrue(len(self.catalogo.listar_generos()) > 0)
+
+    def test_listar_subgeneros_de_un_genero_real(self):
+        subgeneros = self.catalogo.listar_subgeneros("Ciencia ficcion")
+        self.assertIn("Ciberpunk", subgeneros)
+
+    def test_explorar_genero_devuelve_solo_peliculas_de_ese_genero(self):
+        resultados = self.catalogo.explorar_genero("Ciencia ficcion")
+        self.assertTrue(len(resultados) > 0)
+        for pelicula in resultados:
+            self.assertEqual(pelicula.genero.lower(), "ciencia ficcion")
+
+    def test_explorar_subgenero_devuelve_solo_ese_subgenero(self):
+        resultados = self.catalogo.explorar_subgenero("Ciencia ficcion", "Ciberpunk")
+        self.assertTrue(len(resultados) > 0)
+        for pelicula in resultados:
+            self.assertEqual(pelicula.subgenero.lower(), "ciberpunk")
+
 
 if __name__ == "__main__":
     unittest.main()

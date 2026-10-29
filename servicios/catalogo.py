@@ -2,6 +2,7 @@ import bisect
 import csv
 
 from estructuras.arbol import ArbolBST
+from estructuras.arbol_general import ArbolCategorias
 from modelos.pelicula import Pelicula
 from modelos.plataforma import Plataforma
 
@@ -16,6 +17,8 @@ class Catalogo:
         self._titulos_ordenados = []
         # Árbol binario de búsqueda por título normalizado (TP3).
         self._arbol = ArbolBST()
+        # Árbol general de categorías: Género -> Subgénero (TP5).
+        self._categorias = ArbolCategorias()
 
     def cargar_desde_csv(self, ruta):
         with open(ruta, encoding="utf-8") as archivo:
@@ -35,6 +38,7 @@ class Catalogo:
                 )
                 self._peliculas.append(pelicula)
                 self._arbol.insertar(pelicula)
+                self._categorias.insertar(pelicula)
         self._ordenar_por_titulo()
 
     def _ordenar_por_titulo(self):
@@ -68,6 +72,20 @@ class Catalogo:
 
     def altura_arbol(self):
         return self._arbol.altura()
+
+    def listar_generos(self):
+        """Géneros de primer nivel del árbol de categorías (TP5)."""
+        return self._categorias.generos()
+
+    def listar_subgeneros(self, genero):
+        return self._categorias.subgeneros(genero)
+
+    def explorar_genero(self, genero):
+        """Todas las películas de un género, sin importar el subgénero."""
+        return self._categorias.peliculas_de_genero(genero)
+
+    def explorar_subgenero(self, genero, subgenero):
+        return self._categorias.peliculas_de_subgenero(genero, subgenero)
 
     def filtrar_por_genero(self, genero):
         genero = genero.strip().lower()
