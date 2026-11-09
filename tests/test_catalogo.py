@@ -1,4 +1,5 @@
 import unittest
+from datetime import date
 
 from servicios.catalogo import Catalogo
 
@@ -9,7 +10,7 @@ class TestCatalogo(unittest.TestCase):
         self.catalogo.cargar_desde_csv("datos/peliculas.csv")
 
     def test_carga_peliculas(self):
-        self.assertEqual(len(self.catalogo), 32)
+        self.assertEqual(len(self.catalogo), 60)
 
     def test_buscar_encuentra_por_coincidencia_parcial_case_insensitive(self):
         resultados = self.catalogo.buscar("matrix")
@@ -75,6 +76,51 @@ class TestCatalogo(unittest.TestCase):
         self.assertTrue(len(resultados) > 0)
         for pelicula in resultados:
             self.assertEqual(pelicula.subgenero.lower(), "ciberpunk")
+
+    def test_top_n_devuelve_las_mejor_puntuadas_en_orden(self):
+        titulos = [p.titulo for p in self.catalogo.top_n(5)]
+        self.assertEqual(titulos, [
+            "Suenos de Libertad",                           # 9.3
+            "El Padrino",                                   # 9.2
+            "El Caballero de la Noche",                     # 9.0 (tres empatadas: van por título)
+            "El Senor de los Anillos: El Retorno del Rey",  # 9.0
+            "La Lista de Schindler",                        # 9.0
+        ])
+
+    def test_top_n_coincide_con_ordenar_todo(self):
+        esperado = sorted(self.catalogo.listar(), key=lambda p: p.puntaje, reverse=True)[:10]
+        obtenido = self.catalogo.top_n(10)
+        self.assertEqual([p.puntaje for p in obtenido], [p.puntaje for p in esperado])
+
+    def test_top_n_filtra_por_plataformas(self):
+        titulos = [p.titulo for p in self.catalogo.top_n(3, ["netflix"])]
+        self.assertEqual(titulos, ["El Padrino", "Pulp Fiction", "Forrest Gump"])
+
+    def test_top_n_mayor_que_el_catalogo_devuelve_todas(self):
+        self.assertEqual(len(self.catalogo.top_n(1000)), len(self.catalogo))
+
+    def test_top_n_no_altera_el_catalogo(self):
+        cantidad = len(self.catalogo)
+        self.catalogo.top_n(5)
+        self.assertEqual(len(self.catalogo.listar()), cantidad)
+
+    def test_proximos_retiros_en_orden_de_fecha(self):
+        titulos = [p.titulo for p in self.catalogo.proximos_retiros(5, desde=date(2026, 9, 1))]
+        self.assertEqual(titulos, [
+            "Ciudad de Dios",                # 2026-11-20
+            "El Conjuro",                    # 2026-12-01
+            "La Llegada",                    # 2026-12-05
+            "Pulp Fiction",                  # 2026-12-15
+            "El Silencio de los Inocentes",  # 2026-12-20
+        ])
+
+    def test_proximos_retiros_ignora_fechas_pasadas(self):
+        titulos = [p.titulo for p in self.catalogo.proximos_retiros(10, desde=date(2027, 1, 1))]
+        self.assertEqual(titulos, ["Zodiaco", "Mad Max: Furia en el Camino", "Batman Inicia"])
+
+    def test_proximos_retiros_filtra_por_plataformas(self):
+        titulos = [p.titulo for p in self.catalogo.proximos_retiros(10, ["HBO Max"], desde=date(2026, 9, 1))]
+        self.assertEqual(titulos, ["El Conjuro", "Mad Max: Furia en el Camino", "Batman Inicia"])
 
 
 if __name__ == "__main__":

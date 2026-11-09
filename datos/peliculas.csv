@@ -1,24 +1,24 @@
 id,titulo,anio,genero,subgenero,director,actores,puntaje,duracion,plataformas,fecha_retiro
 1,El Padrino,1972,Drama,Crimen,Francis Ford Coppola,Marlon Brando|Al Pacino|James Caan,9.2,175,Netflix,
-2,Pulp Fiction,1994,Crimen,Comedia negra,Quentin Tarantino,John Travolta|Samuel L. Jackson|Uma Thurman,8.9,154,Netflix,2026-10-15
+2,Pulp Fiction,1994,Crimen,Comedia negra,Quentin Tarantino,John Travolta|Samuel L. Jackson|Uma Thurman,8.9,154,Netflix,2026-12-15
 3,Matrix,1999,Ciencia ficcion,Ciberpunk,Lana Wachowski|Lilly Wachowski,Keanu Reeves|Laurence Fishburne|Carrie-Anne Moss,8.7,136,HBO Max,
 4,El Senor de los Anillos: La Comunidad del Anillo,2001,Fantasia,Epica,Peter Jackson,Elijah Wood|Ian McKellen|Viggo Mortensen,8.9,178,HBO Max,
 5,Titanic,1997,Drama,Romance,James Cameron,Leonardo DiCaprio|Kate Winslet,7.9,194,Disney+,
 6,Interestelar,2014,Ciencia ficcion,Espacial,Christopher Nolan,Matthew McConaughey|Anne Hathaway|Jessica Chastain,8.7,169,Netflix,
 7,El Origen,2010,Ciencia ficcion,Thriller,Christopher Nolan,Leonardo DiCaprio|Joseph Gordon-Levitt|Elliot Page,8.8,148,HBO Max,
 8,El Caballero de la Noche,2008,Accion,Superheroes,Christopher Nolan,Christian Bale|Heath Ledger|Gary Oldman,9.0,152,HBO Max,
-9,Batman Inicia,2005,Accion,Superheroes,Christopher Nolan,Christian Bale|Michael Caine|Liam Neeson,8.2,140,HBO Max,2026-11-30
+9,Batman Inicia,2005,Accion,Superheroes,Christopher Nolan,Christian Bale|Michael Caine|Liam Neeson,8.2,140,HBO Max,2027-02-28
 10,Parasitos,2019,Drama,Thriller,Bong Joon-ho,Song Kang-ho|Lee Sun-kyun|Cho Yeo-jeong,8.5,132,Netflix,
 11,El Hombre Arana,2002,Accion,Superheroes,Sam Raimi,Tobey Maguire|Willem Dafoe|Kirsten Dunst,7.4,121,Netflix,
 12,Los Increibles,2004,Animacion,Superheroes,Brad Bird,Craig T. Nelson|Holly Hunter|Samuel L. Jackson,8.0,115,Disney+,
 13,Toy Story,1995,Animacion,Aventura,John Lasseter,Tom Hanks|Tim Allen,8.3,81,Disney+,
 14,Coco,2017,Animacion,Musical,Lee Unkrich,Anthony Gonzalez|Gael Garcia Bernal,8.4,105,Disney+,
 15,Blade Runner 2049,2017,Ciencia ficcion,Ciberpunk,Denis Villeneuve,Ryan Gosling|Harrison Ford|Ana de Armas,8.0,164,HBO Max,
-16,La Llegada,2016,Ciencia ficcion,Drama,Denis Villeneuve,Amy Adams|Jeremy Renner|Forest Whitaker,7.9,116,Netflix,2026-10-08
+16,La Llegada,2016,Ciencia ficcion,Drama,Denis Villeneuve,Amy Adams|Jeremy Renner|Forest Whitaker,7.9,116,Netflix,2026-12-05
 17,Duna,2021,Ciencia ficcion,Epica,Denis Villeneuve,Timothee Chalamet|Rebecca Ferguson|Oscar Isaac,8.0,155,HBO Max,
 18,El Resplandor,1980,Terror,Psicologico,Stanley Kubrick,Jack Nicholson|Shelley Duvall,8.4,146,HBO Max,
 19,2001: Odisea del Espacio,1968,Ciencia ficcion,Espacial,Stanley Kubrick,Keir Dullea|Gary Lockwood,8.3,149,HBO Max,
-20,Ciudad de Dios,2002,Drama,Crimen,Fernando Meirelles,Alexandre Rodrigues|Leandro Firmino,8.6,130,Netflix,2026-09-27
+20,Ciudad de Dios,2002,Drama,Crimen,Fernando Meirelles,Alexandre Rodrigues|Leandro Firmino,8.6,130,Netflix,2026-11-20
 21,El Secreto de sus Ojos,2009,Drama,Thriller,Juan Jose Campanella,Ricardo Darin|Soledad Villamil|Guillermo Francella,8.2,129,Netflix,
 22,Relatos Salvajes,2014,Comedia,Comedia negra,Damian Szifron,Ricardo Darin|Oscar Martinez|Leonardo Sbaraglia,8.1,122,Netflix,
 23,Nueve Reinas,2000,Crimen,Thriller,Fabian Bielinsky,Ricardo Darin|Gaston Pauls,7.9,114,HBO Max,
@@ -30,4 +30,32 @@ id,titulo,anio,genero,subgenero,director,actores,puntaje,duracion,plataformas,fe
 29,Forrest Gump,1994,Drama,Romance,Robert Zemeckis,Tom Hanks|Robin Wright|Gary Sinise,8.8,142,Netflix,
 30,El Club de la Pelea,1999,Drama,Thriller,David Fincher,Brad Pitt|Edward Norton|Helena Bonham Carter,8.8,139,HBO Max,
 31,Pecados Capitales,1995,Thriller,Policial,David Fincher,Brad Pitt|Morgan Freeman|Kevin Spacey,8.6,127,Netflix,
-32,Zodiaco,2007,Thriller,Policial,David Fincher,Jake Gyllenhaal|Mark Ruffalo|Robert Downey Jr.,7.7,157,Netflix,2026-10-22
+32,Zodiaco,2007,Thriller,Policial,David Fincher,Jake Gyllenhaal|Mark Ruffalo|Robert Downey Jr.,7.7,157,Netflix,2027-01-10
+33,La Lista de Schindler,1993,Drama,Historico,Steven Spielberg,Liam Neeson|Ralph Fiennes|Ben Kingsley,9.0,195,Prime Video,
+34,El Senor de los Anillos: El Retorno del Rey,2003,Fantasia,Epica,Peter Jackson,Elijah Wood|Viggo Mortensen|Ian McKellen,9.0,201,HBO Max,
+35,Buenos Muchachos,1990,Crimen,Mafia,Martin Scorsese,Robert De Niro|Ray Liotta|Joe Pesci,8.7,146,Netflix,
+36,El Silencio de los Inocentes,1991,Thriller,Psicologico,Jonathan Demme,Jodie Foster|Anthony Hopkins,8.6,118,Prime Video,2026-12-20
+37,Rescatando al Soldado Ryan,1998,Belico,Segunda Guerra,Steven Spielberg,Tom Hanks|Matt Damon|Tom Sizemore,8.6,169,Netflix,
+38,Suenos de Libertad,1994,Drama,Carcelario,Frank Darabont,Tim Robbins|Morgan Freeman,9.3,142,HBO Max,
+39,El Viaje de Chihiro,2001,Animacion,Fantasia,Hayao Miyazaki,Rumi Hiiragi|Miyu Irino,8.6,125,Netflix,
+40,El Rey Leon,1994,Animacion,Musical,Roger Allers|Rob Minkoff,Matthew Broderick|James Earl Jones|Jeremy Irons,8.5,88,Disney+,
+41,Intensa-Mente,2015,Animacion,Comedia,Pete Docter,Amy Poehler|Phyllis Smith|Bill Hader,8.1,95,Disney+,
+42,Up: Una Aventura de Altura,2009,Animacion,Aventura,Pete Docter,Ed Asner|Jordan Nagai,8.3,96,Disney+,
+43,Wall-E,2008,Animacion,Ciencia ficcion,Andrew Stanton,Ben Burtt|Elissa Knight,8.4,98,Disney+,
+44,Avengers: Endgame,2019,Accion,Superheroes,Anthony Russo|Joe Russo,Robert Downey Jr.|Chris Evans|Scarlett Johansson,8.4,181,Disney+,
+45,Mad Max: Furia en el Camino,2015,Accion,Postapocaliptico,George Miller,Tom Hardy|Charlize Theron,8.1,120,HBO Max,2027-01-25
+46,Terminator 2: El Juicio Final,1991,Ciencia ficcion,Accion,James Cameron,Arnold Schwarzenegger|Linda Hamilton|Edward Furlong,8.6,137,Prime Video,
+47,Jurassic Park,1993,Ciencia ficcion,Aventura,Steven Spielberg,Sam Neill|Laura Dern|Jeff Goldblum,8.2,127,Netflix,
+48,El Laberinto del Fauno,2006,Fantasia,Oscura,Guillermo del Toro,Ivana Baquero|Sergi Lopez|Maribel Verdu,8.2,118,Netflix,
+49,Amelie,2001,Comedia,Romance,Jean-Pierre Jeunet,Audrey Tautou|Mathieu Kassovitz,8.3,122,Prime Video,
+50,Los Infiltrados,2006,Crimen,Policial,Martin Scorsese,Leonardo DiCaprio|Matt Damon|Jack Nicholson,8.5,151,HBO Max,
+51,Psicosis,1960,Terror,Psicologico,Alfred Hitchcock,Anthony Perkins|Janet Leigh,8.5,109,Prime Video,
+52,El Conjuro,2013,Terror,Sobrenatural,James Wan,Vera Farmiga|Patrick Wilson,7.5,112,HBO Max,2026-12-01
+53,Hereditario,2018,Terror,Sobrenatural,Ari Aster,Toni Collette|Alex Wolff|Milly Shapiro,7.3,127,Prime Video,
+54,Django Sin Cadenas,2012,Western,Revisionista,Quentin Tarantino,Jamie Foxx|Christoph Waltz|Leonardo DiCaprio,8.5,165,Netflix,
+55,Bastardos sin Gloria,2009,Belico,Segunda Guerra,Quentin Tarantino,Brad Pitt|Christoph Waltz|Melanie Laurent,8.4,153,Netflix,
+56,El Gran Lebowski,1998,Comedia,Comedia negra,Joel Coen|Ethan Coen,Jeff Bridges|John Goodman|Julianne Moore,8.1,117,Prime Video,
+57,Mi Pobre Angelito,1990,Comedia,Familiar,Chris Columbus,Macaulay Culkin|Joe Pesci|Daniel Stern,7.7,103,Disney+,2026-12-26
+58,Her,2013,Ciencia ficcion,Romance,Spike Jonze,Joaquin Phoenix|Scarlett Johansson|Amy Adams,8.0,126,Netflix,
+59,Oppenheimer,2023,Drama,Historico,Christopher Nolan,Cillian Murphy|Emily Blunt|Matt Damon,8.3,180,Prime Video,
+60,El Hijo de la Novia,2001,Comedia,Dramedia,Juan Jose Campanella,Ricardo Darin|Hector Alterio|Norma Aleandro,7.9,124,Netflix,

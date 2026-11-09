@@ -77,6 +77,12 @@ class Terminal:
                 self._explorar_categorias()
 
             elif opcion == "9":
+                self._mostrar_top_n()
+
+            elif opcion == "10":
+                self._mostrar_alertas_retiro()
+
+            elif opcion == "11":
                 print("\n👋 ¡Gracias por usar el sistema! Hasta luego.")
                 break
 
@@ -125,6 +131,35 @@ class Terminal:
             _imprimir_linea()
             _mostrar_peliculas(self._catalogo.explorar_subgenero(genero, subgenero))
 
+    def _pedir_cantidad(self, mensaje, por_defecto=5):
+        entrada = input(f"\n{mensaje} (ENTER = {por_defecto}): ").strip()
+        return int(entrada) if entrada.isdigit() and int(entrada) > 0 else por_defecto
+
+    def _mostrar_top_n(self):
+        """Ranking por puntaje (heap, TP6), filtrado por las plataformas del usuario."""
+        n = self._pedir_cantidad("🏆 ¿Cuántas películas querés en el ranking?")
+        plataformas = self._usuario.plataformas_contratadas
+        ranking = self._catalogo.top_n(n, plataformas)
+        donde = ", ".join(plataformas) if plataformas else "todas las plataformas"
+        print(f"\n🏆 TOP {n} — {donde}")
+        _imprimir_linea()
+        if not ranking:
+            print("⚠️ No hay películas para mostrar.")
+        medallas = {1: "🥇", 2: "🥈", 3: "🥉"}
+        for idx, pelicula in enumerate(ranking, 1):
+            print(f"{medallas.get(idx, f'{idx}.')} {pelicula.titulo} ⭐{pelicula.puntaje} [{', '.join(pelicula.plataformas)}]")
+
+    def _mostrar_alertas_retiro(self):
+        """Próximas películas en salir del catálogo (heap por fecha, TP6)."""
+        n = self._pedir_cantidad("⏰ ¿Cuántas alertas querés ver?")
+        alertas = self._catalogo.proximos_retiros(n, self._usuario.plataformas_contratadas)
+        print("\n⏰ Se van pronto de tus plataformas:")
+        _imprimir_linea()
+        if not alertas:
+            print("⚠️ No hay películas con fecha de retiro próxima.")
+        for pelicula in alertas:
+            print(f"📅 {pelicula.fecha_retiro} — {pelicula}")
+
     def _mostrar_menu(self):
         print("\n" + "=" * 55)
         print("                MENÚ PRINCIPAL")
@@ -137,5 +172,7 @@ class Terminal:
         print("6. 🌳 Buscar por título exacto (árbol BST)")
         print("7. 🌳 Listar ordenado alfabéticamente (árbol BST)")
         print("8. 📂 Explorar categorías (Género -> Subgénero)")
-        print("9. ❌ Salir")
+        print("9. 🏆 Top N mejor puntuadas en mis plataformas (heap)")
+        print("10. ⏰ Alertas: próximas en salir del catálogo (heap)")
+        print("11. ❌ Salir")
         print("=" * 55)

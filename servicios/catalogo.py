@@ -1,10 +1,25 @@
 import bisect
 import csv
+from datetime import date
 
-from estructuras.arbol import ArbolBST
+from estructuras.arbol import ArbolBST, normalizar_titulo
 from estructuras.arbol_general import ArbolCategorias
+from estructuras.heap import Heap
 from modelos.pelicula import Pelicula
 from modelos.plataforma import Plataforma
+
+
+def prioridad_ranking(pelicula):
+    """Prioridad del Top-N (F3): mayor puntaje primero; si empatan, orden alfabético.
+
+    El puntaje va negado porque Heap es un min-heap: -9.2 < -8.7, así que la de 9.2 queda arriba.
+    """
+    return (-pelicula.puntaje, normalizar_titulo(pelicula.titulo))
+
+
+def prioridad_retiro(pelicula):
+    """Prioridad de las alertas (F6): la fecha de retiro más cercana primero."""
+    return (date.fromisoformat(pelicula.fecha_retiro), normalizar_titulo(pelicula.titulo))
 
 
 class Catalogo:
@@ -86,6 +101,39 @@ class Catalogo:
 
     def explorar_subgenero(self, genero, subgenero):
         return self._categorias.peliculas_de_subgenero(genero, subgenero)
+
+    def top_n(self, n, plataformas=None):
+        """Las n mejor puntuadas, usando un heap (TP6). O(m + n log m), m = candidatas.
+
+        Si se pasan plataformas, solo entran al heap las películas disponibles en alguna.
+        """
+        return self._extraer_n(Heap(prioridad_ranking, self._disponibles(plataformas)), n)
+
+    def proximos_retiros(self, n, plataformas=None, desde=None):
+        """Las n películas que se van antes del catálogo, desde hoy (o `desde`) en adelante (TP6).
+
+        Las que no tienen fecha de retiro no entran al heap: no hay nada que alertar.
+        """
+        desde = desde or date.today()
+        candidatas = [
+            p for p in self._disponibles(plataformas)
+            if p.fecha_retiro and date.fromisoformat(p.fecha_retiro) >= desde
+        ]
+        return self._extraer_n(Heap(prioridad_retiro, candidatas), n)
+
+    def _disponibles(self, plataformas):
+        if not plataformas:
+            return self._peliculas
+        buscadas = {pl.strip().lower() for pl in plataformas}
+        return [p for p in self._peliculas if any(pl.lower() in buscadas for pl in p.plataformas)]
+
+    @staticmethod
+    def _extraer_n(heap, n):
+        """Saca del heap los n primeros (o todos, si hay menos de n)."""
+        resultado = []
+        while heap and len(resultado) < n:
+            resultado.append(heap.extraer())
+        return resultado
 
     def filtrar_por_genero(self, genero):
         genero = genero.strip().lower()
