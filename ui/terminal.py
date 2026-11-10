@@ -83,6 +83,12 @@ class Terminal:
                 self._mostrar_alertas_retiro()
 
             elif opcion == "11":
+                self._explorar_conexiones()
+
+            elif opcion == "12":
+                self._mostrar_mas_conectadas()
+
+            elif opcion == "13":
                 print("\n👋 ¡Gracias por usar el sistema! Hasta luego.")
                 break
 
@@ -160,6 +166,44 @@ class Terminal:
         for pelicula in alertas:
             print(f"📅 {pelicula.fecha_retiro} — {pelicula}")
 
+    def _pedir_pelicula(self, mensaje):
+        """Pide un título exacto. Si no existe, sugiere coincidencias parciales y devuelve None."""
+        titulo = input(f"\n{mensaje}: ").strip()
+        pelicula = self._catalogo.obtener_pelicula(titulo)
+        if pelicula is None:
+            print(f"\n⚠️ No hay una película llamada '{titulo}'.")
+            sugerencias = self._catalogo.buscar(titulo)
+            if sugerencias:
+                print("¿Quisiste decir alguna de estas?")
+                for sugerida in sugerencias[:5]:
+                    print(f"   - {sugerida.titulo}")
+        return pelicula
+
+    def _explorar_conexiones(self):
+        """Vecinos de una película en el grafo (F4, TP7), con el vínculo que los une."""
+        pelicula = self._pedir_pelicula("🕸 Escribí el título de la película")
+        if pelicula is None:
+            return
+        plataformas = self._usuario.plataformas_contratadas
+        aristas = self._catalogo.relacionadas(pelicula, plataformas)
+        donde = ", ".join(plataformas) if plataformas else "todas las plataformas"
+        print(f"\n🕸 Relacionadas con '{pelicula.titulo}' ({donde}) — {len(aristas)} conexiones:")
+        _imprimir_linea()
+        if not aristas:
+            print("⚠️ No hay películas relacionadas disponibles.")
+        for arista in aristas:
+            print(f"[costo {arista.peso}] {arista.destino.titulo} — {' · '.join(arista.vinculos)}")
+
+    def _mostrar_mas_conectadas(self):
+        """Las películas con más vínculos de la red (grado del vértice), vía heap."""
+        vertices, aristas, densidad = self._catalogo.resumen_grafo()
+        print(f"\n🕸 Red de películas: {vertices} películas, {aristas} conexiones, densidad {densidad:.1%}")
+        n = self._pedir_cantidad("¿Cuántas películas querés ver?")
+        print(f"\n🕸 Las {n} películas más conectadas:")
+        _imprimir_linea()
+        for idx, (pelicula, grado) in enumerate(self._catalogo.mas_conectadas(n), 1):
+            print(f"{idx}. {pelicula.titulo} — {grado} conexiones")
+
     def _mostrar_menu(self):
         print("\n" + "=" * 55)
         print("                MENÚ PRINCIPAL")
@@ -174,5 +218,7 @@ class Terminal:
         print("8. 📂 Explorar categorías (Género -> Subgénero)")
         print("9. 🏆 Top N mejor puntuadas en mis plataformas (heap)")
         print("10. ⏰ Alertas: próximas en salir del catálogo (heap)")
-        print("11. ❌ Salir")
+        print("11. 🕸 Explorar conexiones de una película (grafo)")
+        print("12. 🕸 Películas más conectadas (grafo)")
+        print("13. ❌ Salir")
         print("=" * 55)

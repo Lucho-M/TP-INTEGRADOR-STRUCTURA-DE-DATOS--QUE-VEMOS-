@@ -7,6 +7,7 @@ from estructuras.arbol_general import ArbolCategorias
 from estructuras.heap import Heap
 from modelos.pelicula import Pelicula
 from modelos.plataforma import Plataforma
+from servicios.red_peliculas import construir_grafo
 
 
 def prioridad_ranking(pelicula):
@@ -34,6 +35,8 @@ class Catalogo:
         self._arbol = ArbolBST()
         # Árbol general de categorías: Género -> Subgénero (TP5).
         self._categorias = ArbolCategorias()
+        # Red de películas (TP7). Se construye recién la primera vez que se usa: ver _obtener_grafo.
+        self._grafo = None
 
     def cargar_desde_csv(self, ruta):
         with open(ruta, encoding="utf-8") as archivo:
@@ -134,6 +137,47 @@ class Catalogo:
         while heap and len(resultado) < n:
             resultado.append(heap.extraer())
         return resultado
+
+    def _obtener_grafo(self):
+        """Construye el grafo la primera vez que se pide y después lo reutiliza.
+
+        No se arma en cargar_desde_csv porque las aristas por género crecen como n²:
+        con los CSV sintéticos de 100.000 películas (TP2) serían cientos de millones.
+        """
+        if self._grafo is None:
+            self._grafo = construir_grafo(self._peliculas)
+        return self._grafo
+
+    def obtener_pelicula(self, titulo):
+        """La película con ese título exacto (vía árbol BST), o None."""
+        encontradas = self._arbol.buscar(titulo)
+        return encontradas[0] if encontradas else None
+
+    def relacionadas(self, pelicula, plataformas=None):
+        """Vecinos de la película en el grafo (F4), del vínculo más fuerte al más débil (TP7).
+
+        Devuelve las aristas (cada una con destino, peso y vínculos). O(grado log grado).
+        """
+        aristas = self._obtener_grafo().vecinos(pelicula)
+        if plataformas:
+            disponibles = set(self._disponibles(plataformas))
+            aristas = [a for a in aristas if a.destino in disponibles]
+        return sorted(aristas, key=lambda a: (a.peso, normalizar_titulo(a.destino.titulo)))
+
+    def conexion_directa(self, pelicula_a, pelicula_b):
+        """La arista entre dos películas (con sus vínculos), o None si no están conectadas. O(1)."""
+        return self._obtener_grafo().arista(pelicula_a, pelicula_b)
+
+    def mas_conectadas(self, n):
+        """Las n películas con más vecinos, usando el heap del TP6 con prioridad = -grado."""
+        grafo = self._obtener_grafo()
+        heap = Heap(lambda p: (-grafo.grado(p), normalizar_titulo(p.titulo)), self._peliculas)
+        return [(p, grafo.grado(p)) for p in self._extraer_n(heap, n)]
+
+    def resumen_grafo(self):
+        """(vértices, aristas, densidad) de la red."""
+        grafo = self._obtener_grafo()
+        return len(grafo), grafo.cantidad_aristas(), grafo.densidad()
 
     def filtrar_por_genero(self, genero):
         genero = genero.strip().lower()

@@ -122,6 +122,48 @@ class TestCatalogo(unittest.TestCase):
         titulos = [p.titulo for p in self.catalogo.proximos_retiros(10, ["HBO Max"], desde=date(2026, 9, 1))]
         self.assertEqual(titulos, ["El Conjuro", "Mad Max: Furia en el Camino", "Batman Inicia"])
 
+    def test_el_grafo_no_se_construye_al_cargar(self):
+        self.assertIsNone(self.catalogo._grafo)
+        self.catalogo.resumen_grafo()
+        self.assertIsNotNone(self.catalogo._grafo)
+
+    def test_resumen_grafo_dataset_real(self):
+        vertices, aristas, densidad = self.catalogo.resumen_grafo()
+        self.assertEqual(vertices, 60)
+        self.assertEqual(aristas, 235)
+        self.assertAlmostEqual(densidad, 235 / 1770)
+
+    def test_obtener_pelicula_exacta_y_case_insensitive(self):
+        self.assertEqual(self.catalogo.obtener_pelicula("el origen").titulo, "El Origen")
+        self.assertIsNone(self.catalogo.obtener_pelicula("No Existe"))
+
+    def test_relacionadas_ordena_del_vinculo_mas_fuerte_al_mas_debil(self):
+        origen = self.catalogo.obtener_pelicula("El Origen")
+        aristas = self.catalogo.relacionadas(origen)
+        self.assertEqual([a.destino.titulo for a in aristas[:4]],
+                         ["Batman Inicia", "El Caballero de la Noche", "Interestelar", "Oppenheimer"])
+        pesos = [a.peso for a in aristas]
+        self.assertEqual(pesos, sorted(pesos))
+
+    def test_relacionadas_filtra_por_plataformas(self):
+        origen = self.catalogo.obtener_pelicula("El Origen")
+        for arista in self.catalogo.relacionadas(origen, ["Netflix"]):
+            self.assertIn("Netflix", arista.destino.plataformas)
+
+    def test_conexion_directa_muestra_todos_los_vinculos(self):
+        arista = self.catalogo.conexion_directa(
+            self.catalogo.obtener_pelicula("El Origen"), self.catalogo.obtener_pelicula("Interestelar"))
+        self.assertEqual(arista.peso, 1)
+        self.assertEqual(arista.vinculos, ["director: Christopher Nolan", "genero: Ciencia ficcion"])
+
+    def test_conexion_directa_inexistente(self):
+        self.assertIsNone(self.catalogo.conexion_directa(
+            self.catalogo.obtener_pelicula("El Origen"), self.catalogo.obtener_pelicula("Toy Story")))
+
+    def test_mas_conectadas(self):
+        resultado = self.catalogo.mas_conectadas(2)
+        self.assertEqual([(p.titulo, grado) for p, grado in resultado], [("El Origen", 16), ("Oppenheimer", 16)])
+
 
 if __name__ == "__main__":
     unittest.main()
