@@ -7,7 +7,8 @@ from estructuras.arbol_general import ArbolCategorias
 from estructuras.heap import Heap
 from modelos.pelicula import Pelicula
 from modelos.plataforma import Plataforma
-from servicios.red_peliculas import construir_grafo
+from algoritmos.recorridos import bfs, dfs, reconstruir_camino
+from servicios.red_peliculas import COSTO_VINCULO, construir_grafo
 
 
 def prioridad_ranking(pelicula):
@@ -16,6 +17,11 @@ def prioridad_ranking(pelicula):
     El puntaje va negado porque Heap es un min-heap: -9.2 < -8.7, así que la de 9.2 queda arriba.
     """
     return (-pelicula.puntaje, normalizar_titulo(pelicula.titulo))
+
+
+def _clave_titulo(pelicula):
+    """Desempate por título en los recorridos (TP8), para que el resultado no dependa del orden del CSV."""
+    return normalizar_titulo(pelicula.titulo)
 
 
 def prioridad_retiro(pelicula):
@@ -178,6 +184,33 @@ class Catalogo:
         """(vértices, aristas, densidad) de la red."""
         grafo = self._obtener_grafo()
         return len(grafo), grafo.cantidad_aristas(), grafo.densidad()
+
+    def camino_entre(self, origen, destino, plataformas=None):
+        """F5: la cadena con MENOS pasos entre dos películas (BFS, TP8).
+
+        Devuelve una lista de (pelicula, arista con la que se llegó); la primera tiene arista None.
+        Las películas intermedias tienen que estar en las plataformas del usuario; las dos
+        puntas no, porque las eligió él. None si no hay camino.
+        """
+        permitidos = self._permitidos(plataformas, origen, destino)
+        visitados = bfs(self._obtener_grafo(), origen, destino, permitidos, orden=_clave_titulo)
+        return reconstruir_camino(visitados, destino)
+
+    def explorar_en_profundidad(self, origen, plataformas=None, peso_maximo=COSTO_VINCULO["actor"]):
+        """Todas las películas alcanzables desde `origen` siguiendo vínculos fuertes (DFS, TP8).
+
+        Por defecto solo director o actor (peso <= 2): con el género, casi todo el catálogo
+        quedaría conectado y el recorrido no diría nada. Devuelve [(pelicula, Visita)] en
+        orden de visita, sin incluir el origen.
+        """
+        permitidos = self._permitidos(plataformas, origen)
+        visitados = dfs(self._obtener_grafo(), origen, permitidos, peso_maximo, orden=_clave_titulo)
+        return [(pelicula, visita) for pelicula, visita in visitados.items() if pelicula is not origen]
+
+    def _permitidos(self, plataformas, *siempre):
+        if not plataformas:
+            return None
+        return set(self._disponibles(plataformas)) | set(siempre)
 
     def filtrar_por_genero(self, genero):
         genero = genero.strip().lower()

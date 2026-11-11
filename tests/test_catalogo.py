@@ -164,6 +164,54 @@ class TestCatalogo(unittest.TestCase):
         resultado = self.catalogo.mas_conectadas(2)
         self.assertEqual([(p.titulo, grado) for p, grado in resultado], [("El Origen", 16), ("Oppenheimer", 16)])
 
+    def _titulos_camino(self, camino):
+        return [pelicula.titulo for pelicula, _ in camino]
+
+    def test_camino_entre_dos_peliculas_con_bfs(self):
+        camino = self.catalogo.camino_entre(
+            self.catalogo.obtener_pelicula("El Origen"), self.catalogo.obtener_pelicula("Toy Story"))
+        self.assertEqual(self._titulos_camino(camino),
+                         ["El Origen", "Oppenheimer", "Rescatando al Soldado Ryan", "Toy Story"])
+        self.assertEqual([a.vinculos[0] for _, a in camino[1:]],
+                         ["director: Christopher Nolan", "actor: Matt Damon", "actor: Tom Hanks"])
+
+    def test_camino_bfs_es_mas_corto_que_el_arbol_dfs(self):
+        from algoritmos.recorridos import dfs, reconstruir_camino
+        origen = self.catalogo.obtener_pelicula("El Origen")
+        destino = self.catalogo.obtener_pelicula("Toy Story")
+        camino_dfs = reconstruir_camino(dfs(self.catalogo._obtener_grafo(), origen), destino)
+        self.assertLess(len(self.catalogo.camino_entre(origen, destino)), len(camino_dfs))
+
+    def test_camino_directo_es_de_un_paso(self):
+        camino = self.catalogo.camino_entre(
+            self.catalogo.obtener_pelicula("El Origen"), self.catalogo.obtener_pelicula("Titanic"))
+        self.assertEqual(self._titulos_camino(camino), ["El Origen", "Titanic"])
+
+    def test_camino_intermedias_solo_de_las_plataformas_del_usuario(self):
+        camino = self.catalogo.camino_entre(
+            self.catalogo.obtener_pelicula("Matrix"), self.catalogo.obtener_pelicula("Toy Story"), ["Netflix"])
+        for pelicula, _ in camino[1:-1]:
+            self.assertIn("Netflix", pelicula.plataformas)
+
+    def test_camino_sin_conexion_por_plataformas_es_none(self):
+        self.assertIsNone(self.catalogo.camino_entre(
+            self.catalogo.obtener_pelicula("Matrix"), self.catalogo.obtener_pelicula("Coco"), ["Netflix"]))
+
+    def test_explorar_en_profundidad_sigue_solo_directores_y_actores(self):
+        recorrido = self.catalogo.explorar_en_profundidad(self.catalogo.obtener_pelicula("El Origen"))
+        self.assertEqual(len(recorrido), 34)
+        self.assertEqual(recorrido[0][0].titulo, "Batman Inicia")   # primero va al fondo por Nolan
+        for _, visita in recorrido:
+            self.assertLessEqual(visita.arista.peso, 2)
+
+    def test_explorar_en_profundidad_no_incluye_al_origen(self):
+        origen = self.catalogo.obtener_pelicula("El Origen")
+        self.assertNotIn(origen, [p for p, _ in self.catalogo.explorar_en_profundidad(origen)])
+
+    def test_explorar_en_profundidad_pelicula_sin_vinculos_fuertes(self):
+        # Coco no comparte director ni actores con ninguna otra película del catálogo.
+        self.assertEqual(self.catalogo.explorar_en_profundidad(self.catalogo.obtener_pelicula("Coco")), [])
+
 
 if __name__ == "__main__":
     unittest.main()

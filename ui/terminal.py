@@ -89,6 +89,12 @@ class Terminal:
                 self._mostrar_mas_conectadas()
 
             elif opcion == "13":
+                self._mostrar_camino()
+
+            elif opcion == "14":
+                self._explorar_en_profundidad()
+
+            elif opcion == "15":
                 print("\n👋 ¡Gracias por usar el sistema! Hasta luego.")
                 break
 
@@ -204,6 +210,41 @@ class Terminal:
         for idx, (pelicula, grado) in enumerate(self._catalogo.mas_conectadas(n), 1):
             print(f"{idx}. {pelicula.titulo} — {grado} conexiones")
 
+    def _mostrar_camino(self):
+        """F5: cómo se conectan dos películas, en la menor cantidad de pasos (BFS, TP8)."""
+        origen = self._pedir_pelicula("🧭 Película de origen")
+        if origen is None:
+            return
+        destino = self._pedir_pelicula("🧭 Película de destino")
+        if destino is None:
+            return
+        camino = self._catalogo.camino_entre(origen, destino, self._usuario.plataformas_contratadas)
+        print(f"\n🧭 De '{origen.titulo}' a '{destino.titulo}':")
+        _imprimir_linea()
+        if camino is None:
+            print("⚠️ No hay forma de conectarlas pasando solo por películas de tus plataformas.")
+            return
+        print(f"🎬 {camino[0][0].titulo}")
+        for pelicula, arista in camino[1:]:
+            print(f"   ↓ {' · '.join(arista.vinculos)}")
+            print(f"🎬 {pelicula.titulo}")
+        print(f"\n{len(camino) - 1} paso(s) — es el camino con menos pasos posible.")
+
+    def _explorar_en_profundidad(self):
+        """Todo el "universo" de una película por directores y actores (DFS, TP8)."""
+        origen = self._pedir_pelicula("🔎 Película desde la que explorar")
+        if origen is None:
+            return
+        recorrido = self._catalogo.explorar_en_profundidad(origen, self._usuario.plataformas_contratadas)
+        print(f"\n🔎 Desde '{origen.titulo}', siguiendo directores y actores en profundidad:")
+        _imprimir_linea()
+        if not recorrido:
+            print("⚠️ No comparte director ni actores con otra película de tus plataformas.")
+            return
+        for idx, (pelicula, visita) in enumerate(recorrido, 1):
+            print(f"{idx}. {pelicula.titulo} (prof. {visita.nivel}) ← {visita.padre.titulo} · {visita.arista.vinculos[0]}")
+        print(f"\n{len(recorrido)} película(s) conectadas por personas con '{origen.titulo}'.")
+
     def _mostrar_menu(self):
         print("\n" + "=" * 55)
         print("                MENÚ PRINCIPAL")
@@ -220,5 +261,7 @@ class Terminal:
         print("10. ⏰ Alertas: próximas en salir del catálogo (heap)")
         print("11. 🕸 Explorar conexiones de una película (grafo)")
         print("12. 🕸 Películas más conectadas (grafo)")
-        print("13. ❌ Salir")
+        print("13. 🧭 Camino entre dos películas (BFS)")
+        print("14. 🔎 Explorar en profundidad por directores y actores (DFS)")
+        print("15. ❌ Salir")
         print("=" * 55)
